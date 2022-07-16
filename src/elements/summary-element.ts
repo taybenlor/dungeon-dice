@@ -13,6 +13,9 @@ export class SummaryElement extends LitElement {
 
   render() {
     const lastRound = this.rounds[this.rounds.length - 1];
+    if (!lastRound) {
+      return html``;
+    }
     const playerEffects = evaluateRoll(lastRound.playerRoll);
     const monsterEffects = evaluateRoll(lastRound.monsterRoll);
     return html`

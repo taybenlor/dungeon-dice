@@ -1,73 +1,88 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
-import { JUNGLE } from "../quests";
+import { SEWER } from "../quests";
 import { PLAYER } from "../player";
-import { Creature, Player, Quest, Roll, Round } from "../types";
-import { evaluateRoll, randomHand, rollHand } from "../helpers";
+import { Creature, Player, Quest } from "../types";
 
 import "./fight-element";
-import { RAT } from "../monsters";
 
 @customElement("dd-quest")
 export class QuestElement extends LitElement {
   @property({ type: Object })
-  quest: Quest = JUNGLE;
+  quest: Quest = SEWER;
 
-  @state()
-  remainingEncounters: Array<Creature> = [];
-
-  @state()
-  currentEncounter: Creature = { ...RAT };
-
-  @state()
+  @property({ type: Object })
   player: Player = { ...PLAYER };
 
+  @state()
+  remainingEncounters: Array<Creature> = [...SEWER.encounters];
+
+  @state()
+  monster: Creature = { ...SEWER.encounters[0] };
+
+  @state()
+  screen: "fight" | "shop" | "loot" | "lose" = "fight";
+
+  willUpdate(changedProperties: Record<string, any>) {
+    if ("quest" in changedProperties) {
+      this.remainingEncounters = [...this.quest.encounters];
+      if (this.remainingEncounters.length) {
+        this.monster = { ...this.remainingEncounters[0] };
+      }
+      this.screen = "fight";
+    }
+  }
+
   render() {
-    return html``;
+    if (this.screen === "fight") {
+      return html`
+        <dd-fight
+          @dd-fight-update=${this.onFightUpdate}
+          @dd-fight-win=${this.onWin}
+          @dd-fight-lose=${this.onLose}
+          .monster=${this.monster}
+          .player=${this.player}
+        ></dd-fight>
+      `;
+    } else if (this.screen === "shop") {
+      return html` <h1 @click=${() => (this.screen = "fight")}>Shop</h1> `;
+    } else if (this.screen === "loot") {
+      return html` <h1 @click=${() => (this.screen = "fight")}>Loot</h1> `;
+    } else if (this.screen === "lose") {
+      return html` <h1>Lose</h1> `;
+    } else {
+      return html``;
+    }
   }
   static styles = css``;
 
-  onPlayerRoll(event: CustomEvent) {
-    const monsterHand = randomHand(this.monster.deck, this.monster.handSize);
-    const monsterRoll = rollHand(monsterHand);
-    this.evaluateRound({
-      player: { ...this.player },
-      monster: { ...this.monster },
-      playerRoll: [...event.detail.roll],
-      monsterRoll: [...monsterRoll],
-    });
-    this.monsterRoll = monsterRoll;
+  onFightUpdate(event: CustomEvent) {
+    if ("monster" in event.detail) {
+      this.monster = event.detail.monster;
+    }
+
+    if ("player" in event.detail) {
+      this.player = event.detail.player;
+    }
   }
 
-  evaluateRound(round: Round) {
-    const playerEffects = evaluateRoll(round.playerRoll);
-    const monsterEffects = evaluateRoll(round.monsterRoll);
+  onWin() {
+    this.remainingEncounters = this.remainingEncounters.slice(1);
 
-    const playerDamage = Math.max(
-      0,
-      playerEffects.damage - monsterEffects.shield
-    );
-    const monsterDamage = Math.max(
-      0,
-      monsterEffects.damage - playerEffects.shield
-    );
-
-    const monster = this.monster;
-    monster.health -= playerDamage;
-    if (monster.health <= 0) {
-      // TODO: Kill monster
+    if (this.remainingEncounters.length) {
+      this.monster = { ...this.remainingEncounters[0] };
+      this.screen = "shop";
+    } else {
+      this.screen = "loot";
     }
+  }
 
-    const player = this.player;
-    player.health -= monsterDamage;
-    if (player.health <= 0) {
-      // TODO: Kill player
-    }
+  onLose() {
+    this.screen = "lose";
+  }
 
-    monster.health += monsterEffects.heal;
-    player.health += playerEffects.heal;
-
-    this.rounds = [...this.rounds, round];
+  onLootFinished() {
+    this.dispatchEvent(new CustomEvent("dd-quest-win"));
   }
 }
 

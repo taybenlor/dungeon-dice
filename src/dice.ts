@@ -516,6 +516,37 @@ export const FIREBREATH_DIE: Die = {
   ],
 };
 
+export const FEED_DIE: Die = {
+  name: "Feed",
+  cost: 0,
+  color: "darkred",
+  background: "pink",
+  sides: [
+    {
+      effect: "heal",
+      amount: 2,
+      icon: "Heal",
+    },
+    {
+      effect: "heal",
+      amount: 2,
+      icon: "Heal",
+    },
+    {
+      effect: "heal",
+      amount: 1,
+      icon: "Heal",
+    },
+    {
+      effect: "heal",
+      amount: 1,
+      icon: "Heal",
+    },
+    BLANK_SIDE,
+    BLANK_SIDE,
+  ],
+};
+
 export const RECOVER_DIE: Die = {
   name: "Recover",
   cost: 0,

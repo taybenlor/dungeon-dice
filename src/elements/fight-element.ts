@@ -1,7 +1,7 @@
 import { html, css, LitElement } from "lit";
-import { customElement, state } from "lit/decorators.js";
-import { GOBLIN, GOBLIN_BERSERKER, GOBLIN_CLERIC, SNAKE } from "../monsters";
-import { PLAYER, START_DECK } from "../player";
+import { customElement, property, state } from "lit/decorators.js";
+import { SNAKE } from "../monsters";
+import { PLAYER } from "../player";
 import { Creature, Player, Roll, Round } from "../types";
 import { evaluateRoll, randomHand, rollHand } from "../helpers";
 
@@ -11,17 +11,17 @@ import "./summary-element";
 
 @customElement("dd-fight")
 export class FightElement extends LitElement {
+  @property({ type: Object })
+  player: Player = { ...PLAYER };
+
+  @property({ type: Object })
+  monster: Creature = { ...SNAKE };
+
   @state()
   rounds: Array<Round> = [];
 
   @state()
-  monster: Creature = { ...SNAKE };
-
-  @state()
   monsterRoll: Roll = [];
-
-  @state()
-  player: Player = { ...PLAYER };
 
   render() {
     return html`
@@ -66,31 +66,58 @@ export class FightElement extends LitElement {
       monsterEffects.damage - playerEffects.shield
     );
 
-    const monster = this.monster;
+    const monster = { ...this.monster };
+    const player = { ...this.player };
+
     monster.health -= playerDamage;
     monster.health -= monsterEffects.backfire;
     if (monster.health <= 0) {
       monster.health = 0;
-      this.monster = monster;
+      player.health -= playerEffects.backfire;
+      player.health += playerEffects.heal;
+
+      this.dispatchEvent(
+        new CustomEvent("dd-fight-update", {
+          detail: {
+            monster,
+            player,
+          },
+        })
+      );
+      this.dispatchEvent(new CustomEvent("dd-fight-win"));
       return;
     }
 
-    const player = this.player;
     player.health -= monsterDamage;
     player.health -= playerEffects.backfire;
     if (player.health <= 0) {
       player.health = 0;
-      this.monster = monster;
-      this.player = player;
+
+      this.dispatchEvent(
+        new CustomEvent("dd-fight-update", {
+          detail: {
+            monster,
+            player,
+          },
+        })
+      );
+      this.dispatchEvent(new CustomEvent("dd-fight-lose"));
       return;
     }
 
     monster.health += monsterEffects.heal;
     player.health += playerEffects.heal;
 
+    this.dispatchEvent(
+      new CustomEvent("dd-fight-update", {
+        detail: {
+          monster,
+          player,
+        },
+      })
+    );
+
     this.rounds = [...this.rounds, round];
-    this.monster = monster;
-    this.player = player;
   }
 }
 
