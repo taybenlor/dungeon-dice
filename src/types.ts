@@ -1,8 +1,11 @@
+import type { IconName } from "./elements/icon-element";
+
 export type Effect = "damage" | "shield" | "heal" | "blank";
 
 export type Side = {
   effect: Effect;
   amount: number;
+  icon: IconName;
 };
 
 export type Die = {
@@ -12,19 +15,24 @@ export type Die = {
   background: string;
 };
 
-export type Roll = Array<Side>;
+export type Roll = Array<[Die, Side]>;
 
 export type Creature = {
   name: string;
   health: number;
-  shield: number;
   deck: Array<Die>;
+  handSize: number;
+};
+
+export type Player = Creature & {
+  name: "Player";
 };
 
 export type Round = {
-  attacker: Creature;
-  defender: Creature;
-  roll: Roll;
+  playerRoll: Roll;
+  monsterRoll: Roll;
+  player: Player;
+  monster: Creature;
 };
 
 export type Match = {

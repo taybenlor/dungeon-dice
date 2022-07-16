@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>DiceSide</title>
+    <g id="DiceSide" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="dice_empty" fill="currentColor" fill-rule="nonzero">
+            <path d="M15.8,0 L48.25,0 C58.75,0 64,5.26666667 64,15.8 L64,48.25 C64,58.75 58.75,64 48.25,64 L15.8,64 C5.26666667,64 0,58.75 0,48.25 L0,15.8 C0,5.26666667 5.26666667,0 15.8,0" id="Path"></path>
+        </g>
+    </g>
+</svg>
