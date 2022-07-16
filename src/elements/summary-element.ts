@@ -26,6 +26,10 @@ export class SummaryElement extends LitElement {
           playerEffects.shield,
           () => html`, and shielded ${playerEffects.shield} damage`
         )}
+        ${when(
+          playerEffects.backfire,
+          () => html`, and backfired ${playerEffects.backfire} damage`
+        )}
         . ${lastRound.monster.name} did ${monsterEffects.damage} damage to
         Player
         ${when(
@@ -35,6 +39,10 @@ export class SummaryElement extends LitElement {
         ${when(
           monsterEffects.shield,
           () => html`, and shielded ${monsterEffects.shield} damage`
+        )}
+        ${when(
+          monsterEffects.backfire,
+          () => html`, and backfired ${monsterEffects.backfire} damage`
         )}
         .
       </p>

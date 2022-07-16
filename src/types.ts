@@ -1,6 +1,12 @@
 import type { IconName } from "./elements/icon-element";
 
-export type Effect = "damage" | "shield" | "heal" | "blank";
+export type Effect =
+  | "damage"
+  | "shield"
+  | "heal"
+  | "backfire"
+  | "money"
+  | "blank";
 
 export type Side = {
   effect: Effect;
@@ -13,6 +19,7 @@ export type Die = {
   sides: [Side, Side, Side, Side, Side, Side];
   color: string;
   background: string;
+  cost: number;
 };
 
 export type Roll = Array<[Die, Side]>;
@@ -37,4 +44,10 @@ export type Round = {
 
 export type Match = {
   rounds: Array<Round>;
+};
+
+export type Quest = {
+  name: string;
+  encounters: Array<Creature>;
+  loot: Array<Die>;
 };

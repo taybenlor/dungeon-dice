@@ -37,7 +37,6 @@ export class SideElement extends LitElement {
   static styles = css`
     :host {
       display: inline-block;
-      border-radius: 1em;
       width: 4em;
       height: 4em;
       position: relative;
@@ -47,6 +46,8 @@ export class SideElement extends LitElement {
       position: absolute;
       top: 0px;
       left: 0px;
+      width: 100%;
+      height: 100%;
     }
 
     .amount {

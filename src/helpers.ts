@@ -1,4 +1,4 @@
-import { Die, Effect, Roll } from "./types";
+import { Die, Effect, Quest, Roll } from "./types";
 
 export function rollHand(hand: Array<Die>): Roll {
   return hand.map((die) => {
@@ -23,6 +23,8 @@ export function evaluateRoll(roll: Roll): Record<Effect, number> {
     heal: 0,
     shield: 0,
     blank: 0,
+    backfire: 0,
+    money: 0,
   };
 
   for (const [_, side] of roll) {
@@ -31,4 +33,22 @@ export function evaluateRoll(roll: Roll): Record<Effect, number> {
   }
 
   return results;
+}
+
+export function rateQuest(quest: Quest): number {
+  const totalHp = quest.encounters
+    .map((m) => m.health)
+    .reduce((p, c) => p + c, 0);
+
+  const totalDmg = quest.encounters
+    .flatMap((m) => m.deck.flatMap((d) => expectedDamage(d)))
+    .reduce((p, c) => p + c, 0);
+
+  return Math.floor((totalHp + totalDmg) / 10);
+}
+
+export function expectedDamage(die: Die) {
+  return die.sides
+    .map((s) => (s.effect === "damage" ? s.amount / 6 : 0))
+    .reduce((p, c) => p + c, 0);
 }

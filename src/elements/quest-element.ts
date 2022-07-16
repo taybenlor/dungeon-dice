@@ -1,43 +1,29 @@
 import { html, css, LitElement } from "lit";
-import { customElement, state } from "lit/decorators.js";
-import { GOBLIN, GOBLIN_BERSERKER, GOBLIN_CLERIC, SNAKE } from "../monsters";
-import { PLAYER, START_DECK } from "../player";
-import { Creature, Player, Roll, Round } from "../types";
+import { customElement, property, state } from "lit/decorators.js";
+import { JUNGLE } from "../quests";
+import { PLAYER } from "../player";
+import { Creature, Player, Quest, Roll, Round } from "../types";
 import { evaluateRoll, randomHand, rollHand } from "../helpers";
 
-import "./player-element";
-import "./monster-element";
-import "./summary-element";
+import "./fight-element";
+import { RAT } from "../monsters";
 
-@customElement("dd-fight")
-export class FightElement extends LitElement {
-  @state()
-  rounds: Array<Round> = [];
-
-  @state()
-  monster: Creature = { ...SNAKE };
+@customElement("dd-quest")
+export class QuestElement extends LitElement {
+  @property({ type: Object })
+  quest: Quest = JUNGLE;
 
   @state()
-  monsterRoll: Roll = [];
+  remainingEncounters: Array<Creature> = [];
+
+  @state()
+  currentEncounter: Creature = { ...RAT };
 
   @state()
   player: Player = { ...PLAYER };
 
   render() {
-    return html`
-      <dd-monster
-        .name=${this.monster.name}
-        .health=${this.monster.health}
-        .roll=${this.monsterRoll}
-      ></dd-monster>
-      <dd-summary .rounds=${this.rounds}></dd-summary>
-      <dd-player
-        @dd-player-roll=${this.onPlayerRoll}
-        .health=${this.player.health}
-        .handSize=${this.player.handSize}
-        .deck=${this.player.deck}
-      ></dd-player>
-    `;
+    return html``;
   }
   static styles = css``;
 
@@ -68,34 +54,25 @@ export class FightElement extends LitElement {
 
     const monster = this.monster;
     monster.health -= playerDamage;
-    monster.health -= monsterEffects.backfire;
     if (monster.health <= 0) {
-      monster.health = 0;
-      this.monster = monster;
-      return;
+      // TODO: Kill monster
     }
 
     const player = this.player;
     player.health -= monsterDamage;
-    player.health -= playerEffects.backfire;
     if (player.health <= 0) {
-      player.health = 0;
-      this.monster = monster;
-      this.player = player;
-      return;
+      // TODO: Kill player
     }
 
     monster.health += monsterEffects.heal;
     player.health += playerEffects.heal;
 
     this.rounds = [...this.rounds, round];
-    this.monster = monster;
-    this.player = player;
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    "dd-fight": FightElement;
+    "dd-quest": QuestElement;
   }
 }

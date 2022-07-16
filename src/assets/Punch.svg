@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Punch</title>
+    <g id="Punch" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(5.000000, 6.000000)" fill="#FFFFFF">
+            <polyline id="Path" points="8.81679389 22 0 12.3820225 2.18320611 10 11 19.6179775 8.81679389 22"></polyline>
+            <polyline id="Path" points="3 8.38202247 5.21673004 6 14 15.6179775 11.78327 18 3 8.38202247"></polyline>
+            <polyline id="Path" points="22.2827225 3 26.9554974 7.68761905 27 12.4190476 24.6413613 14.7409524 26.9554974 17.0628571 19.9240838 24.1161905 15.2958115 24.1161905 13.4267016 26 10 22.5828571 21.2146597 11.3238095 18.5445026 8.65142857 13.8717277 13.3390476 11.5575916 10.9733333 18.5890052 3.96380952 22.2827225 3"></polyline>
+            <polyline id="Path" points="17 4.68125 14.6518987 7 10 2.31875 12.3481013 0 17 4.68125"></polyline>
+            <polyline id="Path" points="6 5.31875 8.31847134 3 13 7.68125 10.6815287 10 6 5.31875"></polyline>
+        </g>
+    </g>
+</svg>

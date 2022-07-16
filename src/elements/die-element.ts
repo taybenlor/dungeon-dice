@@ -50,7 +50,8 @@ export class DieElement extends LitElement {
       display: flex;
       flex-wrap: wrap;
       font-size: 0.75em;
-      width: 12em;
+      width: calc(12em + 4px);
+      gap: 2px;
     }
   `;
 
