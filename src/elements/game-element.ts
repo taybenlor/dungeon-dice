@@ -10,6 +10,7 @@ import questBackgroundURL from "../assets/QuestBackground.png";
 import lightButtonURL from "../assets/LightButton.png";
 
 import "./quest-element";
+import "./die-information-element";
 
 @customElement("dd-game")
 export class GameElement extends LitElement {
@@ -25,6 +26,7 @@ export class GameElement extends LitElement {
   render() {
     if (this.selectedQuest) {
       return html`
+        <dd-die-information></dd-die-information>
         <dd-quest
           .quest=${this.selectedQuest}
           .player=${this.player}

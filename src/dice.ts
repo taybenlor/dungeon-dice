@@ -178,7 +178,7 @@ const SHIELD_SIDE: Side = {
 };
 
 export const ARMOR_DIE: Die = {
-  name: "Leather Armor",
+  name: "Armor",
   cost: 1,
   color: "#888",
   background: "white",
@@ -461,7 +461,7 @@ export const DEATHRAY_DIE: Die = {
 export const LOOT_DIE: Die = {
   name: "Loot",
   cost: 9,
-  color: "yellow",
+  color: "orange",
   background: "white",
   sides: [
     {

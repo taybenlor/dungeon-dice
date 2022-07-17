@@ -1,4 +1,4 @@
-import { html, css, LitElement } from "lit";
+import { html, css, LitElement, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { map } from "lit/directives/map.js";
 import {
@@ -21,6 +21,9 @@ import { Die, Player } from "../types";
 
 import "./die-element";
 
+import lightButtonURL from "../assets/LightButton.png";
+import darkButtonURL from "../assets/DarkButton.png";
+
 const WEAPON_DICE = [KNIFE_DIE, SWORD_DIE, AXE_DIE, BOW_DIE];
 const ARMOR_DICE = [ARMOR_DIE, HELMET_DIE, SHIELD_DIE];
 const HEALING_DICE = [POTION_DIE, LARGE_POTION_DIE, CHEAP_POTION_DIE];
@@ -33,26 +36,30 @@ export class ShopElement extends LitElement {
 
   render() {
     return html`
-      <h1><button @click=${this.onExit}>Continue</button></h1>
+      <h1>
+        Shop <button class="button" @click=${this.onExit}>Continue</button>
+      </h1>
       <div class="container">
-        <div class="player">
-          <h1>
-            Player: ${this.player.health}hp, $${this.player.money},
-            ${this.player.handSize} hands
-          </h1>
-          <div class="deck">
-            ${map(
-              this.player.deck,
-              (die) => html`<dd-die .die=${die}></dd-die>`
-            )}
-          </div>
-        </div>
         <div class="shop">
-          <h1>Shop</h1>
           <h2>Level Up</h2>
-          <button @click=${this.onHealth}>$2 +1 Health</button>
-          <button @click=${this.onRoll}>$6 +1 Roll</button>
-          <button @click=${this.onHand}>$10 +1 Hand</button>
+          <div class="category">
+            <button class="button level" @click=${this.onHealth}>
+              <span class="cost"> <dd-symbol name="money"></dd-symbol> 2 </span>
+              <span class="effect">
+                +<dd-symbol name="heart"></dd-symbol>
+              </span>
+            </button>
+            <button class="button level" @click=${this.onRoll}>
+              <span class="cost"> <dd-symbol name="money"></dd-symbol> 6 </span>
+              <span class="effect"> +<dd-symbol name="roll"></dd-symbol> </span>
+            </button>
+            <button class="button level" @click=${this.onHand}>
+              <span class="cost">
+                <dd-symbol name="money"></dd-symbol> 10
+              </span>
+              <span class="effect"> +<dd-symbol name="hand"></dd-symbol> </span>
+            </button>
+          </div>
 
           <h2>Weapons</h2>
           <div class="category">
@@ -61,7 +68,7 @@ export class ShopElement extends LitElement {
               (die) =>
                 html`
                   <div class="item">
-                    <h3>$${die.cost}</h3>
+                    <h3><dd-symbol name="money"></dd-symbol> ${die.cost}</h3>
                     <dd-die
                       @dd-die-select=${this.onSelectDie}
                       .die=${die}
@@ -78,7 +85,7 @@ export class ShopElement extends LitElement {
               (die) =>
                 html`
                   <div class="item">
-                    <h3>$${die.cost}</h3>
+                    <h3><dd-symbol name="money"></dd-symbol> ${die.cost}</h3>
                     <dd-die
                       @dd-die-select=${this.onSelectDie}
                       .die=${die}
@@ -95,7 +102,7 @@ export class ShopElement extends LitElement {
               (die) =>
                 html`
                   <div class="item">
-                    <h3>$${die.cost}</h3>
+                    <h3><dd-symbol name="money"></dd-symbol> ${die.cost}</h3>
                     <dd-die
                       @dd-die-select=${this.onSelectDie}
                       .die=${die}
@@ -112,7 +119,7 @@ export class ShopElement extends LitElement {
               (die) =>
                 html`
                   <div class="item">
-                    <h3>$${die.cost}</h3>
+                    <h3><dd-symbol name="money"></dd-symbol> ${die.cost}</h3>
                     <dd-die
                       @dd-die-select=${this.onSelectDie}
                       .die=${die}
@@ -123,44 +130,100 @@ export class ShopElement extends LitElement {
             )}
           </div>
         </div>
+        <dd-player
+          .disabled=${true}
+          .health=${this.player.health}
+          .handSize=${this.player.handSize}
+          .deck=${this.player.deck}
+          .rolls=${this.player.rolls}
+          .money=${this.player.money}
+        ></dd-player>
       </div>
     `;
   }
   static styles = css`
-    .container {
+    :host {
+      height: 100%;
       display: flex;
-      flex-direction: columns;
+      flex-direction: column;
+      box-sizing: border-box;
     }
 
-    .shop {
-      flex-grow: 2;
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+    }
+
+    h1 {
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5em;
+      flex-shrink: 0;
+    }
+
+    h2 {
+      box-sizing: border-box;
+      padding: 1em 0 0 0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
     }
 
     .player {
-      width: 40%;
-      margin-right: 4em;
+      flex-shrink: 0;
     }
 
     .category {
+      box-sizing: border-box;
       display: flex;
       flex-wrap: wrap;
       gap: 1em;
-      border: 2px solid white;
-      padding-top: 1em;
-      margin-top: 1em;
-    }
-
-    .deck {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1em;
-      border-top: 2px solid white;
-      padding-top: 1em;
-      margin-top: 1em;
+      padding: 1em 0 2em 0;
     }
 
     .item {
       display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+    }
+
+    .shop {
+      overflow: scroll;
+      background: #e5e5e5;
+      flex-grow: 1;
+      flex-basis: 0;
+      padding: 0em 1em 2em;
+    }
+
+    .button {
+      background: url("${unsafeCSS(lightButtonURL)}");
+      background-size: contain;
+      height: 3em;
+      aspect-ratio: 190 / 49;
+      border: none;
+      cursor: pointer;
+      font-family: "Kenney Square", sans-serif;
+      color: #272b42;
+      padding-bottom: 4px;
+    }
+
+    .button.level {
+      height: 2em;
+      display: flex;
+      align-items: stretch;
+      background-image: url("${unsafeCSS(darkButtonURL)}");
+    }
+    .button.level span {
+      flex-grow: 1;
+    }
+    .button.level span:first-child {
+      border-right: 1px solid #727685;
     }
   `;
 

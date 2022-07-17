@@ -1,4 +1,4 @@
-import { html, css, LitElement } from "lit";
+import { html, css, LitElement, unsafeCSS } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { SEWER } from "../quests";
 import { PLAYER } from "../player";
@@ -7,6 +7,8 @@ import { Monster, Player, Quest } from "../types";
 import "./fight-element";
 import "./shop-element";
 import "./loot-element";
+
+import lightButtonURL from "../assets/LightButton.png";
 
 @customElement("dd-quest")
 export class QuestElement extends LitElement {
@@ -62,20 +64,43 @@ export class QuestElement extends LitElement {
     } else if (this.screen === "lose") {
       return html`
         <h1>You Died</h1>
-        <button @click=${this.onTryAgain}>Try Again?</button>
+        <h1>
+          <button class="button" @click=${this.onTryAgain}>Try Again?</button>
+        </h1>
       `;
     } else {
       return html``;
     }
   }
   static styles = css`
-    .deck {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1em;
-      border-top: 2px solid white;
-      padding-top: 1em;
-      margin-top: 1em;
+    :host {
+      height: 100%;
+      margin: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin: 0;
+    }
+
+    h1 {
+      color: white;
+      padding: 2em;
+      text-align: center;
+    }
+
+    .button {
+      background: url("${unsafeCSS(lightButtonURL)}");
+      background-size: contain;
+      height: 3em;
+      aspect-ratio: 190 / 49;
+      border: none;
+      cursor: pointer;
+      font-family: "Kenney Square", sans-serif;
+      color: #272b42;
+      padding-bottom: 4px;
     }
   `;
 

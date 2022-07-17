@@ -1,5 +1,6 @@
 import { html, css, LitElement, unsafeCSS } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
+import { when } from "lit/directives/when.js";
 import { SNAKE } from "../monsters";
 import { PLAYER } from "../player";
 import { Creature, Player, Roll, Round } from "../types";
@@ -8,6 +9,7 @@ import { evaluateRoll, randomHand, rollHand } from "../helpers";
 import ratURL from "../assets/monsters/rat.png";
 import pictureFrameURL from "../assets/PictureFrame.png";
 import monsterInfoURL from "../assets/MonsterInfo.png";
+import lightButtonURL from "../assets/LightButton.png";
 
 import "./player-element";
 import "./monster-element";
@@ -31,6 +33,9 @@ export class FightElement extends LitElement {
   @state()
   playerRoll: Roll = [];
 
+  @state()
+  state: "fighting" | "lose" | "win" = "fighting";
+
   render() {
     return html`
       <div class="row">
@@ -45,6 +50,7 @@ export class FightElement extends LitElement {
           <img class="monster" src=${ratURL} />
         </div>
       </div>
+
       <div class="roll-area">
         <div class="row">
           <dd-roll kind="monster" .roll=${this.monsterRoll}></dd-roll>
@@ -53,6 +59,22 @@ export class FightElement extends LitElement {
           <dd-roll kind="player" .roll=${this.playerRoll}></dd-roll>
         </div>
       </div>
+
+      ${when(
+        this.state === "win",
+        () => html` <div class="win-area">
+          <h2>You slayed the ${this.monster.name}.</h2>
+          <button class="button" @click=${this.onAckWin}>Continue</button>
+        </div>`
+      )}
+      ${when(
+        this.state === "lose",
+        () => html` <div class="lose-area">
+          <h2>The ${this.monster.name} defeated you.</h2>
+          <button class="button" @click=${this.onAckLose}>Continue</button>
+        </div>`
+      )}
+
       <dd-player
         @dd-player-roll=${this.onPlayerRoll}
         .health=${this.player.health}
@@ -60,10 +82,15 @@ export class FightElement extends LitElement {
         .deck=${this.player.deck}
         .rolls=${this.player.rolls}
         .money=${this.player.money}
+        .disabled=${this.state !== "fighting"}
       ></dd-player>
     `;
   }
   static styles = css`
+    :host {
+      height: 100%;
+    }
+
     .row {
       display: flex;
       justify-content: space-between;
@@ -84,6 +111,30 @@ export class FightElement extends LitElement {
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
+    }
+
+    .lose-area,
+    .win-area {
+      background: rgba(0, 0, 0, 0.5);
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2em;
+
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 11;
+    }
+
+    .lose-area h2,
+    .win-area h2 {
+      color: white;
+      text-align: center;
     }
 
     dd-roll {
@@ -130,6 +181,18 @@ export class FightElement extends LitElement {
     dd-summary {
       flex-grow: 1;
       margin: 1em;
+    }
+
+    .button {
+      background: url("${unsafeCSS(lightButtonURL)}");
+      background-size: contain;
+      height: 3em;
+      aspect-ratio: 190 / 49;
+      border: none;
+      cursor: pointer;
+      font-family: "Kenney Square", sans-serif;
+      color: #272b42;
+      padding-bottom: 4px;
     }
   `;
 
@@ -178,7 +241,8 @@ export class FightElement extends LitElement {
           },
         })
       );
-      this.dispatchEvent(new CustomEvent("dd-fight-win"));
+      this.rounds = [...this.rounds, round];
+      this.state = "win";
       return;
     }
 
@@ -195,12 +259,16 @@ export class FightElement extends LitElement {
           },
         })
       );
-      this.dispatchEvent(new CustomEvent("dd-fight-lose"));
+      this.rounds = [...this.rounds, round];
+      this.state = "lose";
       return;
     }
 
     monster.health += monsterEffects.heal;
     player.health += playerEffects.heal;
+
+    player.money += playerEffects.money;
+    player.money = Math.max(player.money - monsterEffects.money, 0);
 
     this.dispatchEvent(
       new CustomEvent("dd-fight-update", {
@@ -212,6 +280,14 @@ export class FightElement extends LitElement {
     );
 
     this.rounds = [...this.rounds, round];
+  }
+
+  onAckWin() {
+    this.dispatchEvent(new CustomEvent("dd-fight-win"));
+  }
+
+  onAckLose() {
+    this.dispatchEvent(new CustomEvent("dd-fight-lose"));
   }
 }
 
