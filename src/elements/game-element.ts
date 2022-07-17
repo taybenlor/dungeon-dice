@@ -39,6 +39,8 @@ export class GameElement extends LitElement {
         <div class="picker">
           <img src="${questBackgroundURL}" />
 
+          <h1>Die Dungeon, Die</h1>
+
           <div class="buttons">
             ${map(
               this.questOptions,
@@ -73,9 +75,17 @@ export class GameElement extends LitElement {
       height: 100%;
     }
 
+    h1 {
+      position: absolute;
+      top: 5%;
+      width: 100%;
+      text-align: center;
+      color: white;
+    }
+
     .buttons {
       position: absolute;
-      top: 15%;
+      top: 17%;
       width: 100%;
       text-align: center;
       display: flex;

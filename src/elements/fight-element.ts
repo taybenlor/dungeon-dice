@@ -1,12 +1,11 @@
 import { html, css, LitElement, unsafeCSS } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { when } from "lit/directives/when.js";
-import { SNAKE } from "../monsters";
+import { MONSTER_PICS, SNAKE } from "../monsters";
 import { PLAYER } from "../player";
 import { Creature, Player, Roll, Round } from "../types";
 import { evaluateRoll, randomHand, rollHand } from "../helpers";
 
-import ratURL from "../assets/monsters/rat.png";
 import pictureFrameURL from "../assets/PictureFrame.png";
 import monsterInfoURL from "../assets/MonsterInfo.png";
 import lightButtonURL from "../assets/LightButton.png";
@@ -47,7 +46,7 @@ export class FightElement extends LitElement {
         <dd-summary .rounds=${this.rounds}></dd-summary>
         <div class="picture">
           <img class="frame" src=${pictureFrameURL} />
-          <img class="monster" src=${ratURL} />
+          <img class="monster" src=${MONSTER_PICS[this.monster.name]} />
         </div>
       </div>
 
@@ -109,7 +108,7 @@ export class FightElement extends LitElement {
 
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: space-evenly;
       align-items: center;
     }
 

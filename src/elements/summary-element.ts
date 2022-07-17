@@ -18,40 +18,63 @@ export class SummaryElement extends LitElement {
     if (!lastRound) {
       return html``;
     }
+    const monsterName = lastRound.monster.name;
     const playerEffects = evaluateRoll(lastRound.playerRoll);
     const monsterEffects = evaluateRoll(lastRound.monsterRoll);
-    return html`
-      <p>
-        Player did ${playerEffects.damage} damage to ${lastRound.monster.name}
-        ${when(
-          playerEffects.heal,
-          () => html`, and healed ${playerEffects.heal}`
-        )}
-        ${when(
-          playerEffects.shield,
-          () => html`, and shielded ${playerEffects.shield} damage`
-        )}
-        ${when(
-          playerEffects.backfire,
-          () => html`, and backfired ${playerEffects.backfire} damage`
-        )}
-        . ${lastRound.monster.name} did ${monsterEffects.damage} damage to
-        Player
-        ${when(
-          monsterEffects.heal,
-          () => html`, and healed ${monsterEffects.heal}`
-        )}
-        ${when(
-          monsterEffects.shield,
-          () => html`, and shielded ${monsterEffects.shield} damage`
-        )}
-        ${when(
-          monsterEffects.backfire,
-          () => html`, and backfired ${monsterEffects.backfire} damage`
-        )}
-        .
-      </p>
-    `;
+
+    const effectsList = [];
+
+    if (playerEffects.damage) {
+      if (monsterEffects.shield) {
+        effectsList.push(
+          `Player did ${playerEffects.damage} damage, but ${monsterName} shielded ${monsterEffects.shield}.`
+        );
+      } else {
+        effectsList.push(`Player did ${playerEffects.damage} damage.`);
+      }
+    }
+
+    if (monsterEffects.backfire) {
+      effectsList.push(
+        `${monsterName} backfired ${monsterEffects.damage} damage on themselves.`
+      );
+    }
+
+    if (monsterEffects.damage) {
+      if (playerEffects.shield) {
+        effectsList.push(
+          `${monsterName} did ${monsterEffects.damage} damage, but player shielded ${playerEffects.shield}.`
+        );
+      } else {
+        effectsList.push(`${monsterName} did ${monsterEffects.damage} damage.`);
+      }
+    }
+
+    if (playerEffects.backfire) {
+      effectsList.push(
+        `Player backfired ${playerEffects.damage} damage on themselves.`
+      );
+    }
+
+    if (playerEffects.heal) {
+      effectsList.push(`Player healed ${playerEffects.heal} hp.`);
+    }
+
+    if (monsterEffects.heal) {
+      effectsList.push(`${monsterName} healed ${monsterEffects.heal} hp.`);
+    }
+
+    if (playerEffects.money) {
+      effectsList.push(`Player looted ${playerEffects.money} coins.`);
+    }
+
+    if (monsterEffects.money) {
+      effectsList.push(
+        `${monsterName} looted ${monsterEffects.money} coins from Player.`
+      );
+    }
+
+    return effectsList.map((e) => html`<p>${e}</p>`);
   }
   static styles = css`
     :host {

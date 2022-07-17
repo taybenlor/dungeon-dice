@@ -6,7 +6,6 @@ import {
   CHOMP_DIE,
   CURSED_SHIELD_DIE,
   DEATHBEAM_DIE,
-  DEATHRAY_DIE,
   FEED_DIE,
   FIREBREATH_DIE,
   KNIFE_DIE,
@@ -234,4 +233,36 @@ export const ELDER_DRAGON: Monster = {
   ],
   handSize: 4,
   reward: 15,
+};
+
+import babyDragonURL from "./assets/monsters/baby-dragon.gif";
+import dragonURL from "./assets/monsters/dragon.gif";
+import drakeURL from "./assets/monsters/drake.gif";
+import elderDragonURL from "./assets/monsters/elder-dragon.gif";
+import giantSpiderURL from "./assets/monsters/giant-spider.gif";
+import goblinBerserkerURL from "./assets/monsters/goblin-berserker.gif";
+import goblinClericURL from "./assets/monsters/goblin-cleric.gif";
+import goblinLeaderURL from "./assets/monsters/goblin-leader.gif";
+import goblinURL from "./assets/monsters/goblin.gif";
+import poisonToadURL from "./assets/monsters/poison-toad.gif";
+import ratKingURL from "./assets/monsters/rat-king.gif";
+import ratURL from "./assets/monsters/rat.gif";
+import snakeURL from "./assets/monsters/snake.gif";
+import spiderURL from "./assets/monsters/spider.gif";
+
+export const MONSTER_PICS = {
+  [BABY_DRAGON.name]: babyDragonURL,
+  [DRAGON.name]: dragonURL,
+  [DRAKE.name]: drakeURL,
+  [ELDER_DRAGON.name]: elderDragonURL,
+  [GIANT_SPIDER.name]: giantSpiderURL,
+  [GOBLIN_BERSERKER.name]: goblinBerserkerURL,
+  [GOBLIN_CLERIC.name]: goblinClericURL,
+  [GOBLIN_LEADER.name]: goblinLeaderURL,
+  [GOBLIN.name]: goblinURL,
+  [POISON_TOAD.name]: poisonToadURL,
+  [RAT_KING.name]: ratKingURL,
+  [RAT.name]: ratURL,
+  [SNAKE.name]: snakeURL,
+  [SPIDER.name]: spiderURL,
 };

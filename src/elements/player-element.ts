@@ -206,7 +206,7 @@ export class PlayerElement extends LitElement {
 
       display: flex;
       flex-direction: column;
-      gap: 0.5em;
+      gap: 0.4em;
       justify-content: center;
       align-items: center;
     }
@@ -252,7 +252,7 @@ export class PlayerElement extends LitElement {
     .roll-button {
       background: url("${unsafeCSS(lightButtonURL)}");
       background-size: contain;
-      height: 2.5em;
+      height: 2.4em;
       aspect-ratio: 190 / 49;
       border: none;
       cursor: pointer;
