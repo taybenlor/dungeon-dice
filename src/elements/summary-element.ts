@@ -35,7 +35,7 @@ export class SummaryElement extends LitElement {
 
     if (monsterEffects.backfire) {
       effectsList.push(
-        `${monsterName} backfired ${monsterEffects.damage} damage on themselves.`
+        `${monsterName} backfired ${monsterEffects.backfire} damage on themselves.`
       );
     }
 
@@ -51,7 +51,7 @@ export class SummaryElement extends LitElement {
 
     if (playerEffects.backfire) {
       effectsList.push(
-        `Player backfired ${playerEffects.damage} damage on themselves.`
+        `Player backfired ${playerEffects.backfire} damage on themselves.`
       );
     }
 

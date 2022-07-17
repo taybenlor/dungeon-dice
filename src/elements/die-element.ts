@@ -1,6 +1,5 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { when } from "lit/directives/when.js";
 import { BLANK_DIE } from "../dice";
 import { Die, Side } from "../types";
 

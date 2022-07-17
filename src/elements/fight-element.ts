@@ -3,7 +3,7 @@ import { customElement, property, state } from "lit/decorators.js";
 import { when } from "lit/directives/when.js";
 import { MONSTER_PICS, SNAKE } from "../monsters";
 import { PLAYER } from "../player";
-import { Creature, Monster, Player, Roll, Round } from "../types";
+import { Monster, Player, Roll, Round } from "../types";
 import { evaluateRoll, randomHand, rollHand } from "../helpers";
 
 import pictureFrameURL from "../assets/PictureFrame.png";
@@ -18,7 +18,6 @@ import {
   CLOSE_SOUNDS,
   GLITCH_SOUNDS,
   playRandomSound,
-  playSound,
   POWER_UP_SOUNDS,
 } from "../sound";
 
