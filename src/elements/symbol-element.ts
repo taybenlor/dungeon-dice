@@ -3,9 +3,15 @@ import { html, unsafeStatic } from "lit/static-html.js";
 import { customElement, property } from "lit/decorators.js";
 
 import HeartSVG from "../assets/symbols/heart.svg?raw";
+import HandSVG from "../assets/symbols/hand.svg?raw";
+import MoneySVG from "../assets/symbols/money.svg?raw";
+import RollSVG from "../assets/symbols/roll.svg?raw";
 
 const IconMap = {
   heart: HeartSVG,
+  hand: HandSVG,
+  money: MoneySVG,
+  roll: RollSVG,
 };
 
 export type IconName = keyof typeof IconMap;

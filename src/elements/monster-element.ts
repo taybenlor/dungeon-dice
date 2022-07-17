@@ -1,6 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { Roll } from "../types";
+import { Die } from "../types";
 
 import "./symbol-element";
 
@@ -13,12 +13,21 @@ export class MonsterElement extends LitElement {
   health: number = 0;
 
   @property({ type: Array })
-  roll: Roll = [];
+  deck: Array<Die> = [];
 
   render() {
+    const weaponNames = this.deck
+      .map((d) => d.name)
+      .filter((n) => n.toLowerCase() != "blank")
+      .reduce<Array<string>>(
+        (p, c) => (p.includes(c) && p.length !== 0 ? p : [...p, c]),
+        []
+      );
+
     return html`
       <h1>${this.name}</h1>
       <h2><dd-symbol name="heart"></dd-symbol> ${this.health}</h2>
+      <p>${weaponNames.join(", ")}</p>
     `;
   }
   static styles = css`

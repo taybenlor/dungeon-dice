@@ -37,7 +37,7 @@ export class FightElement extends LitElement {
         <dd-monster
           .name=${this.monster.name}
           .health=${this.monster.health}
-          .roll=${this.monsterRoll}
+          .deck=${this.monster.deck}
         ></dd-monster>
         <dd-summary .rounds=${this.rounds}></dd-summary>
         <div class="picture">
@@ -59,6 +59,7 @@ export class FightElement extends LitElement {
         .handSize=${this.player.handSize}
         .deck=${this.player.deck}
         .rolls=${this.player.rolls}
+        .money=${this.player.money}
       ></dd-player>
     `;
   }

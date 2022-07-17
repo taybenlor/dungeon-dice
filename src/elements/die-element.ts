@@ -45,8 +45,10 @@ export class DieElement extends LitElement {
 
   static styles = css`
     :host {
-      border: 2px solid gray;
+      box-sizing: border-box;
       padding: 1em;
+      background: #e5e5e5;
+      border-radius: 8px;
     }
 
     h3 {
