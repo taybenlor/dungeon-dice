@@ -3,7 +3,7 @@ import { customElement, property, state } from "lit/decorators.js";
 import { when } from "lit/directives/when.js";
 import { MONSTER_PICS, SNAKE } from "../monsters";
 import { PLAYER } from "../player";
-import { Creature, Player, Roll, Round } from "../types";
+import { Creature, Monster, Player, Roll, Round } from "../types";
 import { evaluateRoll, randomHand, rollHand } from "../helpers";
 
 import pictureFrameURL from "../assets/PictureFrame.png";
@@ -14,6 +14,13 @@ import "./player-element";
 import "./monster-element";
 import "./summary-element";
 import "./roll-element";
+import {
+  CLOSE_SOUNDS,
+  GLITCH_SOUNDS,
+  playRandomSound,
+  playSound,
+  POWER_UP_SOUNDS,
+} from "../sound";
 
 @customElement("dd-fight")
 export class FightElement extends LitElement {
@@ -21,7 +28,7 @@ export class FightElement extends LitElement {
   player: Player = { ...PLAYER };
 
   @property({ type: Object })
-  monster: Creature = { ...SNAKE };
+  monster: Monster = { ...SNAKE };
 
   @state()
   rounds: Array<Round> = [];
@@ -37,6 +44,7 @@ export class FightElement extends LitElement {
 
   render() {
     return html`
+      <audio src="./gmtk2022-fight.mp3" .volume=${0.5} autoplay loop></audio>
       <div class="row">
         <dd-monster
           .name=${this.monster.name}
@@ -63,6 +71,9 @@ export class FightElement extends LitElement {
         this.state === "win",
         () => html` <div class="win-area">
           <h2>You slayed the ${this.monster.name}.</h2>
+          <h2>
+            Reward <dd-symbol name="money"></dd-symbol> ${this.monster.reward}
+          </h2>
           <button class="button" @click=${this.onAckWin}>Continue</button>
         </div>`
       )}
@@ -88,6 +99,10 @@ export class FightElement extends LitElement {
   static styles = css`
     :host {
       height: 100%;
+    }
+
+    img {
+      image-rendering: pixelated;
     }
 
     .row {
@@ -222,6 +237,14 @@ export class FightElement extends LitElement {
       monsterEffects.damage - playerEffects.shield
     );
 
+    if (monsterDamage) {
+      playRandomSound(GLITCH_SOUNDS);
+    }
+
+    if (playerDamage) {
+      playRandomSound(CLOSE_SOUNDS);
+    }
+
     const monster = { ...this.monster };
     const player = { ...this.player };
 
@@ -242,6 +265,7 @@ export class FightElement extends LitElement {
       );
       this.rounds = [...this.rounds, round];
       this.state = "win";
+      playRandomSound(POWER_UP_SOUNDS);
       return;
     }
 

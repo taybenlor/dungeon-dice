@@ -23,6 +23,7 @@ import "./die-element";
 
 import lightButtonURL from "../assets/LightButton.png";
 import darkButtonURL from "../assets/DarkButton.png";
+import { CLICK_SOUNDS, COIN_SOUNDS, playRandomSound } from "../sound";
 
 const WEAPON_DICE = [KNIFE_DIE, SWORD_DIE, AXE_DIE, BOW_DIE];
 const ARMOR_DICE = [ARMOR_DIE, HELMET_DIE, SHIELD_DIE];
@@ -36,6 +37,7 @@ export class ShopElement extends LitElement {
 
   render() {
     return html`
+      <audio src="./gmtk2022-shop.mp3" .volume=${0.5} autoplay loop></audio>
       <h1>
         Shop <button class="button" @click=${this.onExit}>Continue</button>
       </h1>
@@ -229,6 +231,8 @@ export class ShopElement extends LitElement {
 
   onExit() {
     this.dispatchEvent(new CustomEvent("dd-shop-exit"));
+
+    playRandomSound(CLICK_SOUNDS);
   }
 
   onHand() {
@@ -241,6 +245,7 @@ export class ShopElement extends LitElement {
         },
       })
     );
+    playRandomSound(COIN_SOUNDS);
   }
 
   onHealth() {
@@ -253,6 +258,7 @@ export class ShopElement extends LitElement {
         },
       })
     );
+    playRandomSound(COIN_SOUNDS);
   }
 
   onRoll() {
@@ -265,6 +271,7 @@ export class ShopElement extends LitElement {
         },
       })
     );
+    playRandomSound(COIN_SOUNDS);
   }
 
   onSelectDie(event: CustomEvent) {
@@ -278,6 +285,8 @@ export class ShopElement extends LitElement {
         },
       })
     );
+
+    playRandomSound(COIN_SOUNDS);
   }
 }
 

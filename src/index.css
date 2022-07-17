@@ -16,6 +16,7 @@
 
 html {
   background: #272b42;
+  image-rendering: pixelated;
 }
 
 body {

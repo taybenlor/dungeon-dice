@@ -1,6 +1,5 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { map } from "lit/directives/map.js";
 import { when } from "lit/directives/when.js";
 import { Roll } from "../types";
@@ -47,6 +46,7 @@ export class RollElement extends LitElement {
       position: relative;
     }
     img {
+      image-rendering: pixelated;
       position: absolute;
       top: 0px;
       left: 0px;

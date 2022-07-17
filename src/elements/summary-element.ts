@@ -1,7 +1,6 @@
 import { html, css, LitElement, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { evaluateRoll } from "../helpers";
-import { when } from "lit/directives/when.js";
 import { Round } from "../types";
 
 import infoBoxURL from "../assets/InfoBox.svg";

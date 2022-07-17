@@ -9,6 +9,7 @@ import handSlotURL from "../assets/HandSlot.svg";
 import lightButtonURL from "../assets/LightButton.png";
 
 import "./die-element";
+import { CLICK_SOUNDS, playRandomSound } from "../sound";
 
 @customElement("dd-player")
 export class PlayerElement extends LitElement {
@@ -164,6 +165,10 @@ export class PlayerElement extends LitElement {
       padding-top: 2em;
     }
 
+    img {
+      image-rendering: pixelated;
+    }
+
     .player {
       box-sizing: border-box;
       flex-shrink: 0;
@@ -270,6 +275,8 @@ export class PlayerElement extends LitElement {
     this.rollsUsed += 1;
 
     this.currentRoll = rollHand(this.hand);
+
+    playRandomSound(CLICK_SOUNDS);
   }
 
   onAttack() {
@@ -285,6 +292,8 @@ export class PlayerElement extends LitElement {
 
     this.currentRoll = null;
     this.hand = [];
+
+    playRandomSound(CLICK_SOUNDS);
   }
 
   onSelectDie(event: CustomEvent) {
@@ -296,12 +305,18 @@ export class PlayerElement extends LitElement {
     while (this.hand.length > this.handSize) {
       this.hand = this.hand.slice(1);
     }
+
+    playRandomSound(CLICK_SOUNDS);
   }
 
-  onToggleLockDie(event: CustomEvent) {}
+  onToggleLockDie() {
+    playRandomSound(CLICK_SOUNDS);
+  }
 
   onUnselectDie(event: CustomEvent) {
     this.hand = this.hand.filter((d) => d != event.detail.die);
+
+    playRandomSound(CLICK_SOUNDS);
   }
 }
 

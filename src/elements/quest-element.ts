@@ -9,6 +9,12 @@ import "./shop-element";
 import "./loot-element";
 
 import lightButtonURL from "../assets/LightButton.png";
+import {
+  CLICK_SOUNDS,
+  COIN_SOUNDS,
+  playRandomSound,
+  playSound,
+} from "../sound";
 
 @customElement("dd-quest")
 export class QuestElement extends LitElement {
@@ -63,6 +69,7 @@ export class QuestElement extends LitElement {
       ></dd-loot>`;
     } else if (this.screen === "lose") {
       return html`
+        <audio src="./gmtk2022-menu.mp3" .volume=${0.5} autoplay loop></audio>
         <h1>You Died</h1>
         <h1>
           <button class="button" @click=${this.onTryAgain}>Try Again?</button>
@@ -137,11 +144,13 @@ export class QuestElement extends LitElement {
       );
     } else {
       this.screen = "loot";
+      playRandomSound(COIN_SOUNDS);
     }
   }
 
   onLose() {
     this.screen = "lose";
+    playSound("./sound/you_lose.ogg");
   }
 
   onLootExit() {

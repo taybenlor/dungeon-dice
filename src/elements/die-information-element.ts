@@ -1,7 +1,6 @@
 import { html, css, LitElement } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { customElement, state } from "lit/decorators.js";
 import { map } from "lit/directives/map.js";
-import { BLANK_DIE } from "../dice";
 import { Die } from "../types";
 import { DieElement } from "./die-element";
 

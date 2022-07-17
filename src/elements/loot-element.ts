@@ -7,6 +7,7 @@ import "./die-element";
 
 import lightButtonURL from "../assets/LightButton.png";
 import chestURL from "../assets/Chest.png";
+import { CLICK_SOUNDS, playRandomSound } from "../sound";
 
 @customElement("dd-loot")
 export class LootElement extends LitElement {
@@ -31,6 +32,10 @@ export class LootElement extends LitElement {
     :host {
       box-sizing: border-box;
       padding: 1em;
+    }
+
+    img {
+      image-rendering: pixelated;
     }
 
     h1 {
@@ -74,6 +79,7 @@ export class LootElement extends LitElement {
 
   onExit() {
     this.dispatchEvent(new CustomEvent("dd-loot-exit"));
+    playRandomSound(CLICK_SOUNDS);
   }
 }
 
