@@ -19,6 +19,7 @@ import {
   BLESSED_SHIELD_DIE,
   CHEAP_POTION_DIE,
   CURSED_SHIELD_DIE,
+  DEATHBEAM_DIE,
   FIREBREATH_DIE,
   FIRESHOT_DIE,
   LOOT_DIE,
@@ -63,29 +64,37 @@ export const GOBLIN_CAMP: Quest = {
 export const DRAGONS_NEST: Quest = {
   name: "Dragons Nest",
   encounters: [
-    DRAKE,
+    { ...DRAKE },
     { ...BABY_DRAGON },
     { ...SNAKE },
     { ...BABY_DRAGON },
-    { ...DRAGON },
   ],
-  loot: [{ ...FIRESHOT_DIE }, { ...FIREBREATH_DIE }],
+  loot: [{ ...FIRESHOT_DIE }, { ...LOOT_DIE }],
 };
 
 export const DRAGONS_HORDE: Quest = {
-  name: "Dragons Horde",
+  name: "Dragon's Horde",
   encounters: [
     { ...GIANT_SPIDER },
     { ...GOBLIN_LEADER },
     { ...BABY_DRAGON },
     { ...DRAGON },
-    { ...ELDER_DRAGON },
   ],
-  loot: [{ ...FIREBREATH_DIE }, { ...LOOT_DIE }, { ...LOOT_DIE }],
+  loot: [{ ...FIREBREATH_DIE }, { ...LOOT_DIE }],
+};
+
+export const FINAL_BOSS: Quest = {
+  name: "Final Boss",
+  encounters: [{ ...DRAKE }, { ...DRAGON }, { ...ELDER_DRAGON }],
+  loot: [{ ...FIREBREATH_DIE }, { ...DEATHBEAM_DIE }, { ...LOOT_DIE }],
 };
 
 export const EASY_QUESTS: Array<Quest> = [SEWER, JUNGLE, ABANDONED_MINE];
 
 export const MEDIUM_QUESTS: Array<Quest> = [CURSED_TEMPLE, GOBLIN_CAMP];
 
-export const HARD_QUESTS: Array<Quest> = [DRAGONS_NEST, DRAGONS_HORDE];
+export const HARD_QUESTS: Array<Quest> = [
+  DRAGONS_NEST,
+  DRAGONS_HORDE,
+  FINAL_BOSS,
+];

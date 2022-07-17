@@ -543,6 +543,33 @@ export const FIREBREATH_DIE: Die = {
   ],
 };
 
+export const DEATHBEAM_DIE: Die = {
+  name: "Deathbeam",
+  cost: 0,
+  color: "green",
+  background: "#212121",
+  sides: [
+    {
+      effect: "damage",
+      amount: 16,
+      icon: "Skull",
+    },
+    {
+      effect: "damage",
+      amount: 16,
+      icon: "Skull",
+    },
+    {
+      effect: "damage",
+      amount: 16,
+      icon: "Skull",
+    },
+    BLANK_SIDE,
+    BLANK_SIDE,
+    BLANK_SIDE,
+  ],
+};
+
 export const FEED_DIE: Die = {
   name: "Feed",
   cost: 0,
