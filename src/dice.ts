@@ -23,8 +23,8 @@ export const BLANK_DIE: Die = {
 export const KNIFE_DIE: Die = {
   name: "Knife",
   cost: 1,
-  color: "#888",
-  background: "#555",
+  color: "#c2cbda",
+  background: "#272b42",
   sides: [
     {
       effect: "damage",
@@ -50,8 +50,8 @@ export const KNIFE_DIE: Die = {
 export const STAFF_DIE: Die = {
   name: "Staff",
   cost: 2,
-  color: "#888",
-  background: "#555",
+  color: "#c2cbda",
+  background: "#272b42",
   sides: [
     {
       effect: "damage",
@@ -85,8 +85,8 @@ export const STAFF_DIE: Die = {
 export const SWORD_DIE: Die = {
   name: "Sword",
   cost: 6,
-  color: "#888",
-  background: "#555",
+  color: "white",
+  background: "#272b42",
   sides: [
     {
       effect: "damage",
@@ -120,8 +120,8 @@ export const SWORD_DIE: Die = {
 export const AXE_DIE: Die = {
   name: "Axe",
   cost: 5,
-  color: "#888",
-  background: "#555",
+  color: "white",
+  background: "#272b42",
   sides: [
     {
       effect: "damage",
@@ -147,8 +147,8 @@ export const AXE_DIE: Die = {
 export const BOW_DIE: Die = {
   name: "Bow",
   cost: 4,
-  color: "#888",
-  background: "#555",
+  color: "#e0a875",
+  background: "#272b42",
   sides: [
     {
       effect: "damage",
@@ -180,7 +180,7 @@ const SHIELD_SIDE: Side = {
 export const ARMOR_DIE: Die = {
   name: "Armor",
   cost: 1,
-  color: "#888",
+  color: "#272b42",
   background: "white",
   sides: [
     SHIELD_SIDE,
@@ -195,7 +195,7 @@ export const ARMOR_DIE: Die = {
 export const HELMET_DIE: Die = {
   name: "Helmet",
   cost: 2,
-  color: "#888",
+  color: "#272b42",
   background: "white",
   sides: [
     {
@@ -218,7 +218,7 @@ export const HELMET_DIE: Die = {
 export const SHIELD_DIE: Die = {
   name: "Shield",
   cost: 5,
-  color: "#888",
+  color: "#272b42",
   background: "white",
   sides: [
     SHIELD_SIDE,
@@ -233,7 +233,7 @@ export const SHIELD_DIE: Die = {
 export const BLESSED_SHIELD_DIE: Die = {
   name: "Blessed Shield",
   cost: 0,
-  color: "#888",
+  color: "#cda400",
   background: "white",
   sides: [
     {
@@ -256,7 +256,7 @@ export const BLESSED_SHIELD_DIE: Die = {
 export const CURSED_SHIELD_DIE: Die = {
   name: "Cursed Shield",
   cost: 0,
-  color: "#888",
+  color: "#4a936d",
   background: "white",
   sides: [
     {
@@ -283,8 +283,8 @@ export const CURSED_SHIELD_DIE: Die = {
 export const POTION_DIE: Die = {
   name: "Small Potion",
   cost: 3,
-  color: "darkred",
-  background: "pink",
+  color: "#d65241",
+  background: "white",
   sides: [
     {
       effect: "heal",
@@ -310,8 +310,8 @@ export const POTION_DIE: Die = {
 export const LARGE_POTION_DIE: Die = {
   name: "Large Potion",
   cost: 6,
-  color: "darkred",
-  background: "pink",
+  color: "#d65241",
+  background: "white",
   sides: [
     {
       effect: "heal",
@@ -341,8 +341,8 @@ export const LARGE_POTION_DIE: Die = {
 export const CHEAP_POTION_DIE: Die = {
   name: "Cheap Potion",
   cost: 3,
-  color: "darkred",
-  background: "pink",
+  color: "#4a936d",
+  background: "white",
   sides: [
     {
       effect: "heal",
@@ -380,8 +380,8 @@ export const CHEAP_POTION_DIE: Die = {
 export const FIREBALL_DIE: Die = {
   name: "Fireball",
   cost: 9,
-  color: "orange",
-  background: "yellow",
+  color: "#d65241",
+  background: "#fae877",
   sides: [
     {
       effect: "damage",
@@ -411,8 +411,8 @@ export const FIREBALL_DIE: Die = {
 export const FIRESHOT_DIE: Die = {
   name: "Fireshot",
   cost: 0,
-  color: "orange",
-  background: "yellow",
+  color: "#d65241",
+  background: "#fae877",
   sides: [
     {
       effect: "damage",
@@ -442,8 +442,8 @@ export const FIRESHOT_DIE: Die = {
 export const DEATHRAY_DIE: Die = {
   name: "Deathray",
   cost: 10,
-  color: "green",
-  background: "#212121",
+  color: "#76deb6",
+  background: "#272b42",
   sides: [
     {
       effect: "damage",
@@ -461,8 +461,8 @@ export const DEATHRAY_DIE: Die = {
 export const LOOT_DIE: Die = {
   name: "Loot",
   cost: 9,
-  color: "orange",
-  background: "white",
+  color: "#f2b14f",
+  background: "#6e3e38",
   sides: [
     {
       effect: "money",
@@ -489,7 +489,7 @@ export const CHOMP_DIE: Die = {
   name: "Chomp",
   cost: 0,
   color: "white",
-  background: "brown",
+  background: "#6e3e38",
   sides: [
     {
       effect: "damage",
@@ -516,7 +516,7 @@ export const BITE_DIE: Die = {
   name: "Bite",
   cost: 0,
   color: "white",
-  background: "brown",
+  background: "#6e3e38",
   sides: [
     {
       effect: "damage",
@@ -542,8 +542,8 @@ export const BITE_DIE: Die = {
 export const POISON_DIE: Die = {
   name: "Poison",
   cost: 0,
-  color: "green",
-  background: "#212121",
+  color: "#76deb6",
+  background: "#272b42",
   sides: [
     {
       effect: "damage",
@@ -577,8 +577,8 @@ export const POISON_DIE: Die = {
 export const FIREBREATH_DIE: Die = {
   name: "Firebreath",
   cost: 0,
-  color: "orange",
-  background: "yellow",
+  color: "#d65241",
+  background: "#fae877",
   sides: [
     {
       effect: "damage",
@@ -604,8 +604,8 @@ export const FIREBREATH_DIE: Die = {
 export const DEATHBEAM_DIE: Die = {
   name: "Deathbeam",
   cost: 0,
-  color: "green",
-  background: "#212121",
+  color: "#76deb6",
+  background: "#272b42",
   sides: [
     {
       effect: "damage",
@@ -631,8 +631,8 @@ export const DEATHBEAM_DIE: Die = {
 export const FEED_DIE: Die = {
   name: "Feed",
   cost: 0,
-  color: "darkred",
-  background: "pink",
+  color: "#d65241",
+  background: "white",
   sides: [
     {
       effect: "heal",
@@ -662,8 +662,8 @@ export const FEED_DIE: Die = {
 export const RECOVER_DIE: Die = {
   name: "Recover",
   cost: 0,
-  color: "darkred",
-  background: "pink",
+  color: "#d65241",
+  background: "white",
   sides: [
     {
       effect: "heal",

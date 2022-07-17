@@ -3,7 +3,9 @@ import { customElement, property } from "lit/decorators.js";
 import { when } from "lit/directives/when.js";
 import { BLANK_DIE } from "../dice";
 import { Die, Side } from "../types";
+
 import "./side-element";
+import "./die-display-element";
 
 @customElement("dd-die")
 export class DieElement extends LitElement {
@@ -17,29 +19,29 @@ export class DieElement extends LitElement {
   selectable: boolean = false;
 
   render() {
+    // ${when(
+    //   this.side,
+    //   () => html`<dd-side
+    //     class="icon"
+    //     icon=${this.side!.icon}
+    //     amount=${this.side!.amount}
+    //     background=${this.die.background}
+    //     color=${this.die.color}
+    //   ></dd-side>`,
+    //   () => html`<dd-side
+    //     class="icon"
+    //     icon=${this.die.sides[0].icon}
+    //     amount=${1}
+    //     background=${this.die.background}
+    //     color=${this.die.color}
+    //   ></dd-side>`
+    // )}
     return html`
       <div
         class=${this.selectable ? "selectable container" : "container"}
         @click=${this.onClick}
       >
-        ${when(
-          this.side,
-          () => html`<dd-side
-            class="icon"
-            icon=${this.side!.icon}
-            amount=${this.side!.amount}
-            background=${this.die.background}
-            color=${this.die.color}
-          ></dd-side>`,
-          () => html`<dd-side
-            class="icon"
-            icon=${this.die.sides[0].icon}
-            amount=${1}
-            background=${this.die.background}
-            color=${this.die.color}
-          ></dd-side>`
-        )}
-
+        <dd-die-display .die=${this.die} .side=${this.side}></dd-die-display>
         <h3>${this.die.name}</h3>
       </div>
     `;

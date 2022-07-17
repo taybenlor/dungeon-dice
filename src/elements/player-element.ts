@@ -54,9 +54,7 @@ export class PlayerElement extends LitElement {
             () =>
               html`
                 <button class="roll-button" @click=${this.onRollDice}>
-                  <dd-symbol name="roll"></dd-symbol> (${this.rolls -
-                  this.rollsUsed}
-                  left)
+                  <dd-symbol name="roll"></dd-symbol> Roll
                 </button>
               `
           )}
@@ -226,10 +224,15 @@ export class PlayerElement extends LitElement {
       display: flex;
       overflow: scroll;
       background: rgba(0, 0, 0, 0.2);
-      gap: 1em;
-      padding: 1em;
+      gap: 2em;
+      padding: 2em;
       margin: 1em;
       border-radius: 1em;
+    }
+
+    .deck dd-die {
+      position: relative;
+      top: 1.5em;
     }
 
     .hand {
@@ -268,15 +271,32 @@ export class PlayerElement extends LitElement {
   `;
 
   onRollDice() {
+    if (this.disabled) {
+      return;
+    }
+
     if (this.rollsUsed === this.rolls) {
       return;
     }
 
-    this.rollsUsed += 1;
-
-    this.currentRoll = rollHand(this.hand);
-
     playRandomSound(CLICK_SOUNDS);
+
+    this.disabled = true;
+
+    this.currentRoll = null;
+
+    setTimeout(() => {
+      const dice = this.shadowRoot?.querySelectorAll(".hand dd-die") ?? [];
+      for (const die of dice) {
+        die.shadowRoot?.querySelector("dd-die-display")?.roll();
+      }
+    }, 0);
+
+    setTimeout(() => {
+      this.disabled = false;
+      this.rollsUsed += 1;
+      this.currentRoll = rollHand(this.hand);
+    }, 800);
   }
 
   onAttack() {

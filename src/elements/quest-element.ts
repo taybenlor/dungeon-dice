@@ -9,12 +9,7 @@ import "./shop-element";
 import "./loot-element";
 
 import lightButtonURL from "../assets/LightButton.png";
-import {
-  CLICK_SOUNDS,
-  COIN_SOUNDS,
-  playRandomSound,
-  playSound,
-} from "../sound";
+import { COIN_SOUNDS, playRandomSound, playSound } from "../sound";
 
 @customElement("dd-quest")
 export class QuestElement extends LitElement {

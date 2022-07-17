@@ -185,14 +185,14 @@ export class ShopElement extends LitElement {
       box-sizing: border-box;
       display: flex;
       flex-wrap: wrap;
-      gap: 1em;
+      gap: 3em;
       padding: 1em 0 2em 0;
     }
 
     .item {
       display: flex;
       flex-direction: column;
-      gap: 0.5em;
+      gap: 2em;
     }
 
     .shop {
@@ -200,7 +200,7 @@ export class ShopElement extends LitElement {
       background: #e5e5e5;
       flex-grow: 1;
       flex-basis: 0;
-      padding: 0em 1em 2em;
+      padding: 0em 2em 2em;
     }
 
     .button {
