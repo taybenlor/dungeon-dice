@@ -8,6 +8,7 @@ import {
   CHEAP_POTION_DIE,
   DEATHRAY_DIE,
   FIREBALL_DIE,
+  HELMET_DIE,
   KNIFE_DIE,
   LARGE_POTION_DIE,
   LOOT_DIE,
@@ -21,11 +22,8 @@ import { Die, Player } from "../types";
 import "./die-element";
 
 const WEAPON_DICE = [KNIFE_DIE, SWORD_DIE, AXE_DIE, BOW_DIE];
-
-const ARMOR_DICE = [ARMOR_DIE, SHIELD_DIE];
-
+const ARMOR_DICE = [ARMOR_DIE, HELMET_DIE, SHIELD_DIE];
 const HEALING_DICE = [POTION_DIE, LARGE_POTION_DIE, CHEAP_POTION_DIE];
-
 const SPELL_DICE = [FIREBALL_DIE, DEATHRAY_DIE, LOOT_DIE];
 
 @customElement("dd-shop")

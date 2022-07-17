@@ -47,6 +47,41 @@ export const KNIFE_DIE: Die = {
   ],
 };
 
+export const STAFF_DIE: Die = {
+  name: "Staff",
+  cost: 2,
+  color: "#888",
+  background: "#555",
+  sides: [
+    {
+      effect: "damage",
+      amount: 1,
+      icon: "Damage",
+    },
+    {
+      effect: "damage",
+      amount: 1,
+      icon: "Damage",
+    },
+    {
+      effect: "damage",
+      amount: 1,
+      icon: "Damage",
+    },
+    {
+      effect: "damage",
+      amount: 1,
+      icon: "Damage",
+    },
+    {
+      effect: "damage",
+      amount: 1,
+      icon: "Damage",
+    },
+    BLANK_SIDE,
+  ],
+};
+
 export const SWORD_DIE: Die = {
   name: "Sword",
   cost: 6,
@@ -143,7 +178,7 @@ const SHIELD_SIDE: Side = {
 };
 
 export const ARMOR_DIE: Die = {
-  name: "Armor",
+  name: "Leather Armor",
   cost: 1,
   color: "#888",
   background: "white",
@@ -151,6 +186,29 @@ export const ARMOR_DIE: Die = {
     SHIELD_SIDE,
     SHIELD_SIDE,
     SHIELD_SIDE,
+    BLANK_SIDE,
+    BLANK_SIDE,
+    BLANK_SIDE,
+  ],
+};
+
+export const HELMET_DIE: Die = {
+  name: "Helmet",
+  cost: 2,
+  color: "#888",
+  background: "white",
+  sides: [
+    {
+      effect: "shield",
+      amount: 2,
+      icon: "Shield",
+    },
+    {
+      effect: "shield",
+      amount: 2,
+      icon: "Shield",
+    },
+    BLANK_SIDE,
     BLANK_SIDE,
     BLANK_SIDE,
     BLANK_SIDE,

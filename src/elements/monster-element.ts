@@ -1,10 +1,8 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { map } from "lit/directives/map.js";
-import { when } from "lit/directives/when.js";
 import { Roll } from "../types";
 
-import "./die-element";
+import "./symbol-element";
 
 @customElement("dd-monster")
 export class MonsterElement extends LitElement {
@@ -19,28 +17,8 @@ export class MonsterElement extends LitElement {
 
   render() {
     return html`
-      ${when(
-        this.health > 0,
-        () => html` <h1>${this.name} ${this.health}hp</h1> `,
-        () => html` <h1>${this.name} (Dead)</h1> `
-      )}
-      <div class="roll">
-        ${when(
-          this.roll.length,
-          () => html`
-            ${map(
-              this.roll,
-              ([die, side]) =>
-                html`<dd-side
-                  icon=${side.icon}
-                  amount=${side.amount}
-                  background=${die.background}
-                  color=${die.color}
-                ></dd-side>`
-            )}
-          `
-        )}
-      </div>
+      <h1>${this.name}</h1>
+      <h2><dd-symbol name="heart"></dd-symbol> ${this.health}</h2>
     `;
   }
   static styles = css`
@@ -48,12 +26,16 @@ export class MonsterElement extends LitElement {
       display: block;
       background: black;
       color: white;
-      padding: 1em;
+      padding: 1.25em;
     }
 
-    .roll {
-      display: flex;
-      gap: 1em;
+    h1 {
+      margin: 0;
+    }
+
+    h2 {
+      margin: 0;
+      color: #262b44;
     }
   `;
 }

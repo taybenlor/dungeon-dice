@@ -1,13 +1,18 @@
-import { html, css, LitElement } from "lit";
+import { html, css, LitElement, unsafeCSS } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { SNAKE } from "../monsters";
 import { PLAYER } from "../player";
 import { Creature, Player, Roll, Round } from "../types";
 import { evaluateRoll, randomHand, rollHand } from "../helpers";
 
+import ratURL from "../assets/monsters/rat.png";
+import pictureFrameURL from "../assets/PictureFrame.png";
+import monsterInfoURL from "../assets/MonsterInfo.png";
+
 import "./player-element";
 import "./monster-element";
 import "./summary-element";
+import "./roll-element";
 
 @customElement("dd-fight")
 export class FightElement extends LitElement {
@@ -23,14 +28,31 @@ export class FightElement extends LitElement {
   @state()
   monsterRoll: Roll = [];
 
+  @state()
+  playerRoll: Roll = [];
+
   render() {
     return html`
-      <dd-monster
-        .name=${this.monster.name}
-        .health=${this.monster.health}
-        .roll=${this.monsterRoll}
-      ></dd-monster>
-      <dd-summary .rounds=${this.rounds}></dd-summary>
+      <div class="row">
+        <dd-monster
+          .name=${this.monster.name}
+          .health=${this.monster.health}
+          .roll=${this.monsterRoll}
+        ></dd-monster>
+        <dd-summary .rounds=${this.rounds}></dd-summary>
+        <div class="picture">
+          <img class="frame" src=${pictureFrameURL} />
+          <img class="monster" src=${ratURL} />
+        </div>
+      </div>
+      <div class="roll-area">
+        <div class="row">
+          <dd-roll kind="monster" .roll=${this.monsterRoll}></dd-roll>
+        </div>
+        <div class="row">
+          <dd-roll kind="player" .roll=${this.playerRoll}></dd-roll>
+        </div>
+      </div>
       <dd-player
         @dd-player-roll=${this.onPlayerRoll}
         .health=${this.player.health}
@@ -40,18 +62,88 @@ export class FightElement extends LitElement {
       ></dd-player>
     `;
   }
-  static styles = css``;
+  static styles = css`
+    .row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    dd-player {
+      display: block;
+      width: 100%;
+      height: calc(min(100vh, 100vw) * (3 / 7));
+      overflow: scroll;
+    }
+
+    .roll-area {
+      background: #6e3e38;
+      height: calc(min(100vh, 100vw) * (2 / 7));
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    dd-roll {
+      height: calc(min(100vh, 100vw) * (1 / 14));
+    }
+
+    .picture {
+      position: relative;
+      width: calc(min(100vh, 100vw) * (2 / 7));
+      height: calc(min(100vh, 100vw) * (2 / 7));
+      flex-shrink: 0;
+    }
+
+    .frame {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .picture .monster {
+      position: absolute;
+      width: calc(min(100vh, 100vw) * (1 / 7));
+      height: calc(min(100vh, 100vw) * (1 / 7));
+      top: calc(min(100vh, 100vw) * (1 / 14));
+      right: calc(min(100vh, 100vw) * (1 / 14));
+    }
+
+    dd-monster {
+      box-sizing: border-box;
+
+      background: url("${unsafeCSS(monsterInfoURL)}");
+      background-size: contain;
+      background-repeat: no-repeat;
+
+      position: relative;
+      width: calc(min(100vh, 100vw) * (2 / 7));
+      height: calc(min(100vh, 100vw) * (2 / 7));
+
+      flex-shrink: 0;
+    }
+
+    dd-summary {
+      flex-grow: 1;
+      margin: 1em;
+    }
+  `;
 
   onPlayerRoll(event: CustomEvent) {
+    const playerRoll = [...event.detail.roll];
     const monsterHand = randomHand(this.monster.deck, this.monster.handSize);
     const monsterRoll = rollHand(monsterHand);
     this.evaluateRound({
       player: { ...this.player },
       monster: { ...this.monster },
-      playerRoll: [...event.detail.roll],
+      playerRoll: [...playerRoll],
       monsterRoll: [...monsterRoll],
     });
     this.monsterRoll = monsterRoll;
+    this.playerRoll = playerRoll;
   }
 
   evaluateRound(round: Round) {

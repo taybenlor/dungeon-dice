@@ -1,7 +1,11 @@
 import { ARMOR_DIE, KNIFE_DIE, SHIELD_DIE, SWORD_DIE } from "./dice";
 import { Player } from "./types";
 
-export const START_DECK = [{ ...KNIFE_DIE }, { ...ARMOR_DIE }];
+export const START_DECK = [
+  { ...KNIFE_DIE },
+  { ...KNIFE_DIE },
+  { ...ARMOR_DIE },
+];
 
 export const PLAYER: Player = {
   name: "Player",

@@ -31,7 +31,7 @@ export class QuestElement extends LitElement {
       if (this.remainingEncounters.length) {
         this.monster = { ...this.remainingEncounters[0] };
       }
-      this.screen = "shop";
+      this.screen = "fight";
     }
   }
 

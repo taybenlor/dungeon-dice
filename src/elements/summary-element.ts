@@ -1,8 +1,10 @@
-import { html, css, LitElement } from "lit";
+import { html, css, LitElement, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { evaluateRoll } from "../helpers";
 import { when } from "lit/directives/when.js";
 import { Round } from "../types";
+
+import infoBoxURL from "../assets/InfoBox.svg";
 
 import "./die-element";
 
@@ -51,7 +53,18 @@ export class SummaryElement extends LitElement {
       </p>
     `;
   }
-  static styles = css``;
+  static styles = css`
+    :host {
+      box-sizing: border-box;
+      display: block;
+      padding: 0 2em;
+      font-size: 12px;
+
+      background: url("${unsafeCSS(infoBoxURL)}");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+  `;
 }
 
 declare global {
