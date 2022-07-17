@@ -2,9 +2,11 @@ import { html, css, LitElement } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { SEWER } from "../quests";
 import { PLAYER } from "../player";
-import { Creature, Player, Quest } from "../types";
+import { Monster, Player, Quest } from "../types";
 
 import "./fight-element";
+import "./shop-element";
+import "./loot-element";
 
 @customElement("dd-quest")
 export class QuestElement extends LitElement {
@@ -15,21 +17,21 @@ export class QuestElement extends LitElement {
   player: Player = { ...PLAYER };
 
   @state()
-  remainingEncounters: Array<Creature> = [...SEWER.encounters];
+  remainingEncounters: Array<Monster> = [...SEWER.encounters];
 
   @state()
-  monster: Creature = { ...SEWER.encounters[0] };
+  monster: Monster = { ...SEWER.encounters[0] };
 
   @state()
-  screen: "fight" | "shop" | "loot" | "lose" = "fight";
+  screen: "fight" | "shop" | "loot" | "lose" = "shop";
 
-  willUpdate(changedProperties: Record<string, any>) {
-    if ("quest" in changedProperties) {
+  willUpdate(changedProperties: Map<string, any>) {
+    if (changedProperties.has("quest")) {
       this.remainingEncounters = [...this.quest.encounters];
       if (this.remainingEncounters.length) {
         this.monster = { ...this.remainingEncounters[0] };
       }
-      this.screen = "fight";
+      this.screen = "shop";
     }
   }
 
@@ -45,16 +47,37 @@ export class QuestElement extends LitElement {
         ></dd-fight>
       `;
     } else if (this.screen === "shop") {
-      return html` <h1 @click=${() => (this.screen = "fight")}>Shop</h1> `;
+      return html`
+        <dd-shop
+          @dd-shop-exit=${this.onShopExit}
+          @dd-shop-buy=${this.onShopBuy}
+          .player=${this.player}
+        ></dd-shop>
+      `;
     } else if (this.screen === "loot") {
-      return html` <h1 @click=${() => (this.screen = "fight")}>Loot</h1> `;
+      return html`<dd-loot
+        @dd-loot-exit=${this.onLootExit}
+        .rewards=${this.quest.loot}
+      ></dd-loot>`;
     } else if (this.screen === "lose") {
-      return html` <h1>Lose</h1> `;
+      return html`
+        <h1>You Died</h1>
+        <button @click=${this.onTryAgain}>Try Again?</button>
+      `;
     } else {
       return html``;
     }
   }
-  static styles = css``;
+  static styles = css`
+    .deck {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      border-top: 2px solid white;
+      padding-top: 1em;
+      margin-top: 1em;
+    }
+  `;
 
   onFightUpdate(event: CustomEvent) {
     if ("monster" in event.detail) {
@@ -62,7 +85,13 @@ export class QuestElement extends LitElement {
     }
 
     if ("player" in event.detail) {
-      this.player = event.detail.player;
+      this.dispatchEvent(
+        new CustomEvent("dd-player-update", {
+          detail: {
+            player: event.detail.player,
+          },
+        })
+      );
     }
   }
 
@@ -72,6 +101,15 @@ export class QuestElement extends LitElement {
     if (this.remainingEncounters.length) {
       this.monster = { ...this.remainingEncounters[0] };
       this.screen = "shop";
+      this.dispatchEvent(
+        new CustomEvent("dd-player-update", {
+          detail: {
+            player: {
+              money: this.player.money + this.monster.reward,
+            },
+          },
+        })
+      );
     } else {
       this.screen = "loot";
     }
@@ -81,8 +119,56 @@ export class QuestElement extends LitElement {
     this.screen = "lose";
   }
 
-  onLootFinished() {
+  onLootExit() {
+    this.dispatchEvent(
+      new CustomEvent("dd-player-update", {
+        detail: {
+          player: {
+            deck: [...this.player.deck, ...this.quest.loot],
+          },
+        },
+      })
+    );
     this.dispatchEvent(new CustomEvent("dd-quest-win"));
+  }
+
+  onShopBuy(event: CustomEvent) {
+    const cost = event.detail.cost;
+    const money = this.player.money - cost;
+    if (money < 0) {
+      return;
+    }
+
+    const player = { ...this.player };
+    const effect = event.detail.effect;
+    if (effect === "die") {
+      player.deck.push(event.detail.die);
+    } else if (effect === "health") {
+      player.health += event.detail.amount;
+    } else if (effect === "hand") {
+      player.handSize += event.detail.amount;
+    } else if (effect === "roll") {
+      player.rolls += event.detail.amount;
+    }
+
+    this.dispatchEvent(
+      new CustomEvent("dd-player-update", {
+        detail: {
+          player: {
+            ...player,
+            money,
+          },
+        },
+      })
+    );
+  }
+
+  onShopExit() {
+    this.screen = "fight";
+  }
+
+  onTryAgain() {
+    window.location.reload();
   }
 }
 

@@ -83,3 +83,9 @@ export const DRAGONS_HORDE: Quest = {
   ],
   loot: [{ ...FIREBREATH_DIE }, { ...LOOT_DIE }, { ...LOOT_DIE }],
 };
+
+export const EASY_QUESTS: Array<Quest> = [SEWER, JUNGLE, ABANDONED_MINE];
+
+export const MEDIUM_QUESTS: Array<Quest> = [CURSED_TEMPLE, GOBLIN_CAMP];
+
+export const HARD_QUESTS: Array<Quest> = [DRAGONS_NEST, DRAGONS_HORDE];

@@ -1,3 +1,4 @@
+import { EASY_QUESTS, HARD_QUESTS, MEDIUM_QUESTS } from "./quests";
 import { Die, Effect, Quest, Roll } from "./types";
 
 export function rollHand(hand: Array<Die>): Roll {
@@ -51,4 +52,12 @@ export function expectedDamage(die: Die) {
   return die.sides
     .map((s) => (s.effect === "damage" ? s.amount / 6 : 0))
     .reduce((p, c) => p + c, 0);
+}
+
+export function chooseQuests(): Array<Quest> {
+  return [
+    EASY_QUESTS[Math.floor(Math.random() * EASY_QUESTS.length)],
+    MEDIUM_QUESTS[Math.floor(Math.random() * MEDIUM_QUESTS.length)],
+    HARD_QUESTS[Math.floor(Math.random() * HARD_QUESTS.length)],
+  ];
 }

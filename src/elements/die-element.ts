@@ -1,6 +1,7 @@
 import { html, css, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { map } from "lit/directives/map.js";
+import { when } from "lit/directives/when.js";
 import { BLANK_DIE } from "../dice";
 import { Die } from "../types";
 import "./side-element";
@@ -15,11 +16,17 @@ export class DieElement extends LitElement {
   @property({ type: Object })
   die: Die = BLANK_DIE;
 
+  @property({ type: Boolean })
+  selectable: boolean = false;
+
   render() {
     return html`
       <h3>
         ${this.die.name}
-        <button @click=${this.select}>Select</button>
+        ${when(
+          this.selectable,
+          () => html`<button @click=${this.select}>Select</button>`
+        )}
       </h3>
       <div class="die-container">
         ${map(

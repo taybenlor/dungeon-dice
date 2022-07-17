@@ -49,7 +49,7 @@ export const KNIFE_DIE: Die = {
 
 export const SWORD_DIE: Die = {
   name: "Sword",
-  cost: 4,
+  cost: 6,
   color: "#888",
   background: "#555",
   sides: [
@@ -84,7 +84,7 @@ export const SWORD_DIE: Die = {
 
 export const AXE_DIE: Die = {
   name: "Axe",
-  cost: 3,
+  cost: 5,
   color: "#888",
   background: "#555",
   sides: [
@@ -111,7 +111,7 @@ export const AXE_DIE: Die = {
 
 export const BOW_DIE: Die = {
   name: "Bow",
-  cost: 3,
+  cost: 4,
   color: "#888",
   background: "#555",
   sides: [
@@ -208,7 +208,7 @@ export const CURSED_SHIELD_DIE: Die = {
     },
     SHIELD_SIDE,
     SHIELD_SIDE,
-    BLANK_SIDE,
+    SHIELD_SIDE,
     BLANK_SIDE,
     {
       effect: "backfire",
@@ -426,6 +426,33 @@ export const LOOT_DIE: Die = {
 //
 // Monsters
 //
+
+export const CHOMP_DIE: Die = {
+  name: "Chomp",
+  cost: 0,
+  color: "white",
+  background: "brown",
+  sides: [
+    {
+      effect: "damage",
+      amount: 2,
+      icon: "Bite",
+    },
+    {
+      effect: "damage",
+      amount: 1,
+      icon: "Bite",
+    },
+    {
+      effect: "damage",
+      amount: 1,
+      icon: "Bite",
+    },
+    BLANK_SIDE,
+    BLANK_SIDE,
+    BLANK_SIDE,
+  ],
+};
 
 export const BITE_DIE: Die = {
   name: "Bite",

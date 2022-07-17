@@ -31,8 +31,14 @@ export type Creature = {
   handSize: number;
 };
 
+export type Monster = Creature & {
+  reward: number;
+};
+
 export type Player = Creature & {
   name: "Player";
+  money: number;
+  rolls: number;
 };
 
 export type Round = {
@@ -48,6 +54,6 @@ export type Match = {
 
 export type Quest = {
   name: string;
-  encounters: Array<Creature>;
+  encounters: Array<Monster>;
   loot: Array<Die>;
 };

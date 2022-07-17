@@ -1,7 +1,9 @@
 import {
+  ARMOR_DIE,
   AXE_DIE,
   BITE_DIE,
   BLANK_DIE,
+  CHOMP_DIE,
   CURSED_SHIELD_DIE,
   FEED_DIE,
   FIREBREATH_DIE,
@@ -10,34 +12,36 @@ import {
   POTION_DIE,
   RECOVER_DIE,
 } from "./dice";
-import { Creature } from "./types";
+import { Monster } from "./types";
 
 //
 // Animals
 //
 
-export const RAT: Creature = {
+export const RAT: Monster = {
   name: "Rat",
   health: 3,
-  deck: [{ ...BITE_DIE }, { ...BLANK_DIE }],
+  deck: [{ ...CHOMP_DIE }, { ...CHOMP_DIE }, { ...BLANK_DIE }],
   handSize: 1,
+  reward: 1,
 };
 
-export const RAT_KING: Creature = {
+export const RAT_KING: Monster = {
   name: "Rat King",
   health: 8,
   deck: [
     { ...BITE_DIE },
-    { ...BITE_DIE },
-    { ...BITE_DIE },
-    { ...BITE_DIE },
+    { ...CHOMP_DIE },
+    { ...CHOMP_DIE },
+    { ...CHOMP_DIE },
     { ...FEED_DIE },
     { ...BLANK_DIE },
   ],
   handSize: 1,
+  reward: 3,
 };
 
-export const POISON_TOAD: Creature = {
+export const POISON_TOAD: Monster = {
   name: "Poison Toad",
   health: 8,
   deck: [
@@ -49,9 +53,10 @@ export const POISON_TOAD: Creature = {
     { ...BLANK_DIE },
   ],
   handSize: 2,
+  reward: 3,
 };
 
-export const SPIDER: Creature = {
+export const SPIDER: Monster = {
   name: "Spider",
   health: 6,
   deck: [
@@ -63,9 +68,10 @@ export const SPIDER: Creature = {
     { ...BLANK_DIE },
   ],
   handSize: 1,
+  reward: 2,
 };
 
-export const GIANT_SPIDER: Creature = {
+export const GIANT_SPIDER: Monster = {
   name: "Giant Spider",
   health: 12,
   deck: [
@@ -77,69 +83,74 @@ export const GIANT_SPIDER: Creature = {
     { ...BLANK_DIE },
   ],
   handSize: 2,
+  reward: 4,
 };
 
 //
 // Goblins
 //
 
-export const GOBLIN: Creature = {
+export const GOBLIN: Monster = {
   name: "Goblin",
-  health: 8,
+  health: 10,
   deck: [
     { ...KNIFE_DIE },
     { ...KNIFE_DIE },
     { ...KNIFE_DIE },
-    { ...KNIFE_DIE },
+    { ...ARMOR_DIE },
     { ...BLANK_DIE },
   ],
   handSize: 2,
+  reward: 3,
 };
 
-export const GOBLIN_CLERIC: Creature = {
+export const GOBLIN_CLERIC: Monster = {
   name: "Goblin Cleric",
-  health: 6,
-  deck: [
-    { ...KNIFE_DIE },
-    { ...KNIFE_DIE },
-    { ...POTION_DIE },
-    { ...POTION_DIE },
-    { ...BLANK_DIE },
-  ],
-  handSize: 2,
-};
-
-export const GOBLIN_BERSERKER: Creature = {
-  name: "Goblin Berserker",
   health: 8,
   deck: [
-    { ...AXE_DIE },
-    { ...AXE_DIE },
-    { ...AXE_DIE },
-    { ...BLANK_DIE },
+    { ...KNIFE_DIE },
+    { ...KNIFE_DIE },
+    { ...POTION_DIE },
+    { ...POTION_DIE },
     { ...BLANK_DIE },
   ],
   handSize: 2,
+  reward: 3,
 };
 
-export const GOBLIN_LEADER: Creature = {
-  name: "Goblin Leader",
+export const GOBLIN_BERSERKER: Monster = {
+  name: "Goblin Berserker",
   health: 10,
   deck: [
     { ...AXE_DIE },
     { ...AXE_DIE },
+    { ...AXE_DIE },
+    { ...BLANK_DIE },
+    { ...BLANK_DIE },
+  ],
+  handSize: 2,
+  reward: 3,
+};
+
+export const GOBLIN_LEADER: Monster = {
+  name: "Goblin Leader",
+  health: 12,
+  deck: [
+    { ...AXE_DIE },
+    { ...AXE_DIE },
     { ...CURSED_SHIELD_DIE },
     { ...CURSED_SHIELD_DIE },
     { ...POTION_DIE },
   ],
   handSize: 2,
+  reward: 4,
 };
 
 //
 // Dragons
 //
 
-export const SNAKE: Creature = {
+export const SNAKE: Monster = {
   name: "Snake",
   health: 5,
   deck: [
@@ -150,9 +161,10 @@ export const SNAKE: Creature = {
     { ...BLANK_DIE },
   ],
   handSize: 2,
+  reward: 2,
 };
 
-export const DRAKE: Creature = {
+export const DRAKE: Monster = {
   name: "Drake",
   health: 14,
   deck: [
@@ -163,9 +175,10 @@ export const DRAKE: Creature = {
     { ...BLANK_DIE },
   ],
   handSize: 2,
+  reward: 4,
 };
 
-export const BABY_DRAGON: Creature = {
+export const BABY_DRAGON: Monster = {
   name: "Baby Dragon",
   health: 22,
   deck: [
@@ -178,9 +191,10 @@ export const BABY_DRAGON: Creature = {
     { ...BLANK_DIE },
   ],
   handSize: 2,
+  reward: 7,
 };
 
-export const DRAGON: Creature = {
+export const DRAGON: Monster = {
   name: "Dragon",
   health: 30,
   deck: [
@@ -196,9 +210,10 @@ export const DRAGON: Creature = {
     { ...BLANK_DIE },
   ],
   handSize: 3,
+  reward: 10,
 };
 
-export const ELDER_DRAGON: Creature = {
+export const ELDER_DRAGON: Monster = {
   name: "Elder Dragon",
   health: 48,
   deck: [
@@ -215,4 +230,5 @@ export const ELDER_DRAGON: Creature = {
     { ...BLANK_DIE },
   ],
   handSize: 4,
+  reward: 15,
 };

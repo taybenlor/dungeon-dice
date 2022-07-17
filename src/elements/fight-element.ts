@@ -36,6 +36,7 @@ export class FightElement extends LitElement {
         .health=${this.player.health}
         .handSize=${this.player.handSize}
         .deck=${this.player.deck}
+        .rolls=${this.player.rolls}
       ></dd-player>
     `;
   }

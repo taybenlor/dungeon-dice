@@ -1,1 +1,1 @@
-import "./elements/quest-element";
+import "./elements/game-element";
